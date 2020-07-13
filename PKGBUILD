@@ -3,8 +3,8 @@
 
 pkgname=fluent-bit
 
-pkgmaj=1.4
-pkgver=1.4.6
+_pkgmaj=1.5
+pkgver=1.5.0
 pkgrel=1
 epoch=
 
@@ -29,12 +29,12 @@ backup=('etc/fluent-bit/fluent-bit.conf'
 options=()
 install=
 changelog=
-source=("https://fluentbit.io/releases/$pkgmaj/$pkgname-$pkgver.tar.gz")
+source=("https://fluentbit.io/releases/${_pkgmaj}/${pkgname}-${pkgver}.tar.gz")
 noextract=()
 validpgpkeys=()
 
 build() {
-    cd $pkgname-$pkgver/build
+    cd "${pkgname}-${pkgver}/build"
     cmake \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_INSTALL_SYSCONFDIR=/etc \
@@ -48,7 +48,7 @@ build() {
 }
 
 check() {
-    cd $pkgname-$pkgver/build
+    cd "${pkgname}-${pkgver}/build"
     make test || true
 }
 
@@ -59,14 +59,14 @@ package() {
     make DESTDIR="$pkgdir/" install
 
     # put systemd unit files in the right spot (make install puts them in /lib/systemd/system)
-    mkdir -p "$pkgdir/usr/lib/systemd/system"
-    mv "$pkgdir/lib/systemd/system/fluent-bit.service" "$pkgdir/usr/lib/systemd/system"
-    rm -rf "$pkgdir/lib"
+    mkdir -p "${pkgdir}/usr/lib/systemd/system"
+    mv "${pkgdir}/lib/systemd/system/fluent-bit.service" "${pkgdir}/usr/lib/systemd/system"
+    rm -rf "${pkgdir}/lib"
 
     # install license file and documentation
     cd "${srcdir}/${pkgname}-${pkgver}"
-    install -Dm 644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname/"
-    install -Dm 644 *.md Dockerfile* -t "$pkgdir/usr/share/doc/$pkgname/"
+    install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}/"
+    install -Dm 644 *.md Dockerfile* -t "${pkgdir}/usr/share/doc/${pkgname}/"
 }
 
-sha512sums=('98b4541f3ece656c0fe83ae021433bca92009a2601ba85951fc8fa26388e10325e5492f23425d01906963b1a6aade83d33fc607531bbcaad47c448629f92daa7')
+sha512sums=('30438bebed6fa14283c24fa34749729c7ebc1a365fc9d5c1cdf348586959d409666f2371a65322a0b871afcf98f3828a28fb7783db0b94dd461a22805202afea')

@@ -4,7 +4,9 @@
 
 To build:
 
-    makepkg -CcfLsr
+```sh
+extra-x86_64-build
+```
 
 That is `-c` for 'clean after succesful build', `-C` for 'remove $srcdir before
 building', `-f` for 'force rebuilding if package already exists', `-L` for
